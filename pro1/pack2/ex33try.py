@@ -25,7 +25,11 @@ except Exception as a : # 얘가 에러 잡는 것 중 상위
 
 finally :
     print("에러 유무에 상관없이 반드시 수행한다.")
+
 print('end')
+print('종료')
+
+
 
 """
 에러 별 처리는 지양
