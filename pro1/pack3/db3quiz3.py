@@ -20,7 +20,7 @@ def genjik():
         cursor = conn.cursor()
         gsql ="""
         select jikwongen as 성별, count(*) as 직원수,
-        round(avg(jikwonpay)) as 평균급여 from jikwon
+        avg(jikwonpay) as 평균급여 from jikwon
         where jikwongen is not null
         group by jikwongen 
         """

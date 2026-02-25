@@ -49,7 +49,8 @@ def jikown() :
         jikwonjik as 직급, jikwongen as 성별
         from jikwon
         left outer join buser on busernum = buserno
-        where jikwonno = '{0}' and jikwonname = '{1}'
+        where busernum = (select busernum from jikwon
+        where jikwonno = '{0}')
         """.format(jik_no, jik_name)  
 
 
@@ -62,20 +63,24 @@ def jikown() :
         else :
             for (jikwonno, jikwonname, busername, busertel, jikwonjik, jikwongen) in check :
                 print(jikwonno, jikwonname, busername, busertel, jikwonjik, jikwongen)
+        
+        print("직원 수:", len(check))
 
-        bu_no = check[0]
-        jsql = """
-        SELECT jikwonno, jikwonname, busername, busertel, jikwonjik, jikwongen
-        FROM jikwon
-        inner join buser on busernum = buserno
-        where busernum = '%s'
-        order by jikwonjik asc, jikwonname asc
+        gsql = """
+        select gogekno as 고객번호, gogekname as 고객명, 
+        gogektel as 고객번호,  (YEAR(CURDATE()) - (1900 + LEFT(gogekjumin, 2)) + 1) as 나이
+        from gogek
+        left outer join jikwon on gogekdamsano = jikwonno
+        where gogekdamsano is not null
         """
-        cursor.execute(jsql, (bu_no,))
-        jik_mem = cursor.fetchall()
-        for m in jik_mem:
-            print(f"{m[0]} {m[1]} {m[2]} {m[3]} {m[4]} {m[5]}")
-        print(f"직원 수 : {len(jik_mem)}")
+        cursor.execute(gsql)
+        gcheck = cursor.fetchall()
+
+        for gogekno, gogekname, gogektel, gogeknai in gcheck :
+            nai = int(gogeknai)
+            print(gogekno, gogekname, gogektel, nai)
+
+        print('관리 고객 수 :', len(gcheck))
 
     except Exception as e :
         print('err :', e)
