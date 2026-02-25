@@ -32,6 +32,8 @@ def gogke() :
 
         for jikwonno, jikwonname, gogeksu in godata :
             print(jikwonno, jikwonname, gogeksu)
+        
+        print('인원 수 :', len(godata))
 
     except Exception as e :
         print('err :', e)
