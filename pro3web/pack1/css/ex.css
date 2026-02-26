@@ -1,0 +1,60 @@
+/* css 파일의 주석 */
+#myid2 {
+    background-color: yellow;
+    color: red;
+    font-size: 20px;
+}
+
+
+/* 동적 선택자 */
+/* input:focus {background-color: #FFd72d;} */
+/* input:focus {background-color: silver;} */
+/* input:focus {background-color: rgb(244,244,1);} */
+input:focus {
+    background-color: rgb(50%, 100%, 10%);
+}
+
+/* input tag에 :focus 하면 배경색 바꾸라는 뜻 */
+
+a:link {
+    text-decoration: none;
+}
+
+/* a 태그의 밑줄 삭제 */
+
+a:hover {
+    color: orange;
+    font-size: 30px;
+}
+
+/* css 선택자는 JS에서도 사용한다. */
+/* 선택 연습 */
+b {
+    font-size: 8px;
+}
+
+div b {
+    font-size: 15px;
+}
+
+/* div tag 자손들 모두 변경 */
+
+div>b {
+    font-size: 30px;
+    color: gold;
+}
+
+/* div tag 직계 자식만 해당 */
+/* "<" 이건 없음 */
+
+div b#hi {
+    font-size: 40px;
+}
+
+div b.hello {
+    font-size: 50px;
+}
+
+span b {
+    background-color: blanchedalmond;
+}
