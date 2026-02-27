@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    *** 조건 판단문 : if ***
+    <br>
+    <script>
+        //let ave = prompt("평균 점수 입력 :", "80"); // 입력 프롬프트
+        //document.write("ave :", ave);
+
+        let ave = 85;
+
+        if (ave >= 90) {
+            document.write("점수 :" + ave + "이므로 <b style='color: blue'>우수</b>");
+        } else if (ave >= 70) {
+            // 수행할 명령문이 복수일 경우 중괄호 안에 적음
+            document.write("점수 :" + ave + "이므로 <b style='color: orange'>보통</b>"); // 노란색은 잘 안 보여서 오렌지로 바꿨어요!
+        } else {
+            document.write("점수 :" + ave + "이므로 <b style='color: red'>저조</b>");
+        }
+    </script>
+    <hr>
+    *** 조건 판단문 : switch ***
+    <br>
+    <script>
+        result = "D"    // 학점 기억 변수
+
+        switch (result) {
+            case "A": {
+                document.write("매우 우수");
+                break;
+            }
+            case "B": {
+                document.write("우수");
+                break;
+            }
+            case "C": {
+                document.write("보통");
+                break;
+            }
+            case "D":
+            case "F": document.write("불량"); break;
+            default: document.write("기타");
+        }
+    </script>
+    </script>
+
+</body>
+
+</html>

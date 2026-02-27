@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    --- 변수와 연산자 --- <br />
+    <script type="text/javascript">
+        let aa; // Morden한 변수 선언
+        aa = 5;
+        var bb; //전통적인 변수 선언
+        bb = 50;
+        bb = bb + 10
+        const cc = 500; //모던한 상수 선언
+        // cc = cc + 10 상수는 값이 고정이라 오류남
+        let dd = false
+        let msg = "변수 선언 이해"
+        document.write(aa, "<br>", bb, "<br>", cc, "<br>", dd, "<br>", msg); // 브라우저에 출력
+        document.write("<hr>");
+        document.write("type 확인 :", typeof (1), ' ', typeof (-1.5), ' ', typeof ("유성"), ' '
+            , typeof (true), ' ', typeof (null), ' ', typeof (unfined));
+        {   //영역 확보
+            let v1 = 1; // 영역 내의 지역변수 = 영역 내에서만 값이 있음.
+            // var v1 = 1; 전역변수
+            document.write("<br>", v1);
+            {   // 하나의 영역 블럭
+                let v2 = 2; //영역 내의 지역변수
+                document.write("<br>", v2);
+                {   // 하나의 영역 블럭 
+                    let v3 = 3 //영역 내의 지역변수
+                    document.write("<br>", v3);
+                    document.write("<br>", v1, ' ', v2, ' ', v3);
+                }
+            }
+        }
+        //document.write("<br>", v1, ' ', v2, ' ', v3); <== 영역 밖에서 출력하기 때문에 오류
+        // err : Uncaught ReferenceError : v1, v2, v3 is not defined
+    </script>
+    <hr>
+    --- 연산자 ---<br>
+    <script>
+        let x = 5, y = 2;
+        document.write("<br>", x, " ", y);
+        document.write("<br>산술 연산 :", x + y, ' ', x / y, ' ', x % y);
+        document.write("<br>관계(비교) 연산:", x > y, ' ', x <= y, ' ', x == y, ' ', x != y);
+        document.write("<br>논리 연산(&&-and, ||-or):", x > y && x <= y, ' ', x > y || x <= y);
+        document.write("<br>누적 연산 :", x = x + 1, ' ', x++, ' ', ++x, ' ', x += 1);
+        document.write("<br>삼항 연산 :", (x > y) ? 1000 : 1000 + 2000);
+        // 연산자 우선순위는 Python과 동일
+
+        document.write("<br>", "a" + "b" + "c");
+
+        let k, b, s;
+        k = b = s = 6 + 5; // 할당 연산 체이닝
+        document.write("<br>", k, " ", b, " ", s)
+    </script>
+</body>
+
+
+</html>
