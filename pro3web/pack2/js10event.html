@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        function func() {
+            // 이벤트 처리용 함수
+            let dateTime = "2026-3-3";
+            let arrDate = dateTime.split("-");
+            // document.write(`${arrDate[0]}년 ${arrDate[1]}월 ${arrDate[2]}일`); // 새 창에서 출력
+            console.log(`${arrDate[0]}년 ${arrDate[1]}월 ${arrDate[2]}일`); // 콘솔에서 출력
+        }
+    </script>
+</head>
+
+<body>
+    <h2>이벤트 처리 이해</h2>
+    <a href="https://www.naver.com">네이버</a><br>
+    <a href="javascript:func()">이벤트 처리 함수 호출(이벤트 처리 핸들러 X)</a>
+    <br>이벤트 핸들러 >> on 이벤트 종류 = 핸들러 함수()<br>
+    <a href="javascript:onclick=func()">이벤트 처리 함수 호출(이벤트 핸들러 O)</a>
+    <br>
+    <button onclick="func()">이벤트 처리 함수 호출3</button>
+    <br>
+    <input type="button" onclick="func()" value="이벤트 처리 함수 호출4" />
+</body>
+
+</html>
