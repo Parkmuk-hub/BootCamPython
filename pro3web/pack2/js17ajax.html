@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        window.onload = () => {
+            document.querySelector("#btn1").onclick = funcJson;
+            document.querySelector("#btn2").onclick = funcCsv;
+        }
+
+        function funcJson() {
+            let xhr = new XMLHttpRequest();
+
+            xhr.open("GET", "sangpum.json", true);
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    let data = JSON.parse(xhr.responseText);
+
+                    let output = "JSON 반환 결과 <br>";
+                    output += "코드&nbsp;&nbsp;&nbsp;품명<br>"
+
+                    for (let i = 0; i < data.length; i++) {
+                        output += data[i].code + "&nbsp;&nbsp;&nbsp;" + data[i].sang + "<br>";
+                    }
+                    document.querySelector("#result").innerHTML = output;
+                } else {
+                    // 통신이 끝났는데 성공이 아닐 때만 에러 메시지 출력
+                    document.querySelector("#result").innerHTML = "로딩 실패 :" + xhr.status;
+                }
+            }; // <--- onreadystatechange 종료
+            xhr.send(); // <--- send는 이벤트 설정 밖에서 호출해야 함
+        } // <--- funcJson 종료
+
+        function funcCsv() {
+            let xhr = new XMLHttpRequest();
+
+            // 정적 파일은 POST 대신 GET 권장 (POST는 서버 설정에 따라 오류 가능)
+            xhr.open("GET", "sangpum.csv", true);
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    // xhr.response 대신 xhr.responseText 사용 권장
+                    let text = xhr.responseText.trim();
+                    let lines = text.split("\n");
+
+                    let output = "CSV 반환 결과 <br>";
+
+                    for (let i = 0; i < lines.length; i++) {
+                        if (lines[i] !== "") {
+                            let parts = lines[i].split(",");
+                            let code = parts[0].trim();
+                            let sang = parts[1].trim();
+                            output += "코드는 " + code + ", 상품명은 " + sang + "<br>"
+                        }
+                    }
+                    document.querySelector("#result").innerHTML = output;
+                }
+            }; // <--- onreadystatechange 종료
+            xhr.send(); // <--- send는 이벤트 설정 밖에서 호출해야 함
+        } // <--- funcCsv 종료
+    </script>
+</head>
+
+<body>
+    <h3>전통 AJAX 처리</h3>
+    <button id="btn1">JSON 불러오기</button>
+    <button id="btn2">CSV 불러오기</button>
+    <hr>
+    <div id="result"></div>
+</body>
+
+</html>
