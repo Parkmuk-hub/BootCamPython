@@ -1,31 +1,36 @@
 {% extends "base.html" %}
+
 {% block content %}
-<h2>**장바구니**</h2>
-{% if cart %}
-<table border="1">
-    <tr>
-        <th>상품명</th>
-        <th>가격</th>
-        <th>수량</th>
-        <th>합계</th>
-        <th>삭제</th>
-    </tr>
-    {% set total = 0 %}
-    {% for name, info in cart.items() %}
-    {% set subtotal = info.price * info.qty %}
-    {% set total = total + subtotal %}
-    <tr>
-        <td>{{name}}</td>
-        <td>{{info.price}}</td>
-        <td>{{info.qty}}</td>
-        <td>{{subtotal}}</td>
-        <td><a href="/remove/{{name}}">삭제</a></td>
-    </tr>
+<h2>🛒 장바구니 목록</h2>
+
+{# 합계를 계산하기 위해 변수를 하나 선언합니다 #}
+{% set total_amount = namespace(value=0) %}
+
+<ul>
+    {% for item_name, info in cart.items() %}
+    {# 각 상품별 금액(가격 * 수량) 계산 #}
+    {% set item_total = info.price * info.qty %}
+
+    {# 전체 총합에 누적 #}
+    {% set total_amount.value = total_amount.value + item_total %}
+
+    <li>
+        <strong>{{ item_name }}</strong> -
+        가격: {{ info.price }}원 |
+        수량: {{ info.qty }}개 |
+        소계: {{ item_total }}원
+        <a href="/remove/{{ item_name }}">[삭제]</a>
+    </li>
+    {% else %}
+    <li>장바구니가 비어 있습니다.</li>
     {% endfor %}
-</table>
-<p>총 금액 : {{total}}원</p>
-<a href="/clear">장바구니 비우기</a>
-{% else %}
-<p>장바구니가 비었습니다</p>
-{% endif %}
+</ul>
+
+<hr>
+
+{# 누적된 총 금액 출력 #}
+<h3>총 결제 금액: <span style="color: blue;">{{ total_amount.value }}</span>원</h3>
+
+<br>
+<a href="/">[상품 목록으로 돌아가기]</a>
 {% endblock %}
