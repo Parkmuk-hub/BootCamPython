@@ -50,6 +50,49 @@ def logout():
     session.clear()
     return redirect(url_for("main_page"))
 
+# 회원 데이터를 담을 리스트 (데이터베이스 대신 임시 사용)
+USERS = [
+    {
+        "id": "test", 
+        "pw": "1234", 
+        "name": "테스터", 
+        "gender": "남", 
+        "height": "180", 
+        "weight": "75", 
+        "size": "L"
+    }
+]
+
+@app.route("/signup", methods=["GET", "POST"])
+def signup():
+    if request.method == "POST":
+        user_id = request.form.get("user_id")
+        user_pw = request.form.get("user_pw")
+        user_name = request.form.get("user_name")
+        # 새로 추가된 항목들
+        gender = request.form.get("gender")
+        height = request.form.get("height")
+        weight = request.form.get("weight")
+        size = request.form.get("size")
+
+        if any(user['id'] == user_id for user in USERS):
+            return "<script>alert('이미 존재하는 아이디입니다.'); history.back();</script>"
+
+        # 모든 정보를 딕셔너리에 담아 저장
+        USERS.append({
+            "id": user_id, 
+            "pw": user_pw, 
+            "name": user_name,
+            "gender": gender,
+            "height": height,
+            "weight": weight,
+            "size": size
+        })
+        
+        print(f"새 회원 가입: {user_name} ({gender}, {height}cm, {weight}kg, {size}사이즈)") # 확인용 로그
+        return "<script>alert('회원가입 완료! 로그인해주세요.'); location.href='/login';</script>"
+
+    return render_template("signup.html")
 @app.route("/main", methods=["GET", "POST"])
 def main_page():
     search_query = request.args.get('search', '').strip().lower()

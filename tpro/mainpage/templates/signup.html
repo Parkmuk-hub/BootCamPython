@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <title>회원가입</title>
+    <style>
+        body {
+            font-family: 'Pretendard', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: #f9f9f9;
+        }
+
+        .signup-box {
+            background: white;
+            padding: 40px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            width: 300px;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background: #000;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="signup-box" style="width: 350px;">
+        <h2 style="text-align: center;">회원가입</h2>
+        <form action="/signup" method="POST">
+            <input type="text" name="user_id" placeholder="아이디" required>
+            <input type="password" name="user_pw" placeholder="비밀번호" required>
+            <input type="text" name="user_name" placeholder="이름" required>
+
+            <div style="margin-bottom: 15px; font-size: 14px;">
+                <label>성별: </label>
+                <input type="radio" name="gender" value="남" id="male" checked style="width: auto;"> <label
+                    for="male">남</label>
+                <input type="radio" name="gender" value="여" id="female" style="width: auto;"> <label
+                    for="female">여</label>
+            </div>
+
+            <input type="number" name="height" placeholder="키 (cm)" required>
+            <input type="number" name="weight" placeholder="몸무게 (kg)" required>
+
+            <div style="margin-bottom: 15px;">
+                <label style="font-size: 14px;">평소 사이즈: </label>
+                <select name="size" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px;">
+                    <option value="XS">XS</option>
+                    <option value="S">S</option>
+                    <option value="M">M</option>
+                    <option value="L">L</option>
+                    <option value="XL">XL</option>
+                    <option value="XXL">2XL</option>
+                </select>
+            </div>
+
+            <button type="submit">가입하기</button>
+        </form>
+        <div style="margin-top: 15px; text-align: center; font-size: 12px;">
+            이미 회원이신가요? <a href="/login" style="text-decoration: none; color: #666;">로그인</a>
+        </div>
+    </div>
+</body>
+
+</html>
