@@ -97,13 +97,40 @@
             <p style="color:#666; min-height: 100px;">{{ p.desc }}</p>
 
             <div class="btns">
-                <a href="{{ url_for('add_cart', p_id=p.id) }}" class="btn">장바구니 담기</a>
-                <a href="{{ url_for('order_page') }}" class="btn btn-black">바로 구매</a>
+                <a href="{{ url_for('order_page', p_id=p.id) }}" class="btn btn-black">바로 구매하기</a>
+
+                <a href="{{ url_for('add_cart', p_id=p.id) }}" class="btn" style="background:#fff; color:#000;">장바구니
+                    담기</a>
             </div>
 
-            <div style="margin-top: 30px;">
-                <a href="/main" style="color:#999; font-size:14px; text-decoration: none;">← 목록으로 돌아가기</a>
+            <div style="margin-top: 50px; border-top: 1px solid #eee; padding-top: 20px;">
+                <a href="/main" class="btn-back">
+                    <span style="margin-right: 8px;">←</span> 메인으로
+                </a>
             </div>
+
+            <style>
+                .btn-back {
+                    display: inline-flex;
+                    align-items: center;
+                    justify-content: center;
+                    padding: 12px 24px;
+                    color: #888;
+                    font-size: 13px;
+                    font-weight: 600;
+                    letter-spacing: 0.05em;
+                    text-decoration: none;
+                    border: 1px solid #ddd;
+                    border-radius: 4px;
+                    transition: all 0.3s ease;
+                }
+
+                .btn-back:hover {
+                    color: #000;
+                    border-color: #000;
+                    background-color: #f9f9f9;
+                }
+            </style>
         </div>
     </div>
 </body>

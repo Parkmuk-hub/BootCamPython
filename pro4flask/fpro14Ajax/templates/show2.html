@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <button id="loadBtn">상품자료 읽기(fetch)</button>
+    <table id="resultTable">
+
+    </table>
+    <script>
+        document.getElementById("loadBtn").addEventListener("click", function () {
+            // 1. fetch 시작
+            fetch("/api/sangdata")
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error("서버오류");
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    const table = document.getElementById("resultTable");
+                    table.innerHTML = ""; // 기존 내용 비우기
+
+                    if (data.length === 0) {
+                        table.innerHTML = "<tr><td>자료 없음</td></tr>";
+                        return;
+                    }
+
+                    // 테이블 헤더 생성
+                    let headerRow = "<tr>";
+                    // [수정] Object.keys (대문자 O)
+                    Object.keys(data[0]).forEach(key => {
+                        headerRow += `<th>${key}</th>`;
+                    });
+                    headerRow += "</tr>"; // [수정] <tr>이 아니라 </tr>로 닫기
+                    table.innerHTML += headerRow;
+
+                    // 자료(내용) 채우기
+                    data.forEach(row => {
+                        let rowHtml = "<tr>"; // 변수명 정리
+                        Object.values(row).forEach(value => {
+                            rowHtml += `<td>${value}</td>`;
+                        });
+                        rowHtml += "</tr>";
+                        table.innerHTML += rowHtml;
+                    });
+                })
+                .catch(error => {
+                    console.error("상세 에러:", error);
+                    alert("에러 발생: " + error.message);
+                });
+            // 괄호가 여기까지 다 들어와야 합니다!
+        });
+    </script>
+</body>
+
+</html>
