@@ -45,23 +45,21 @@ def set_cookie() :
     # read_cookie로 다시 요청함.
 
 @app.get("/read_cookie")
-def read_cookie() :
-    # 브라우저가 요청에 실어 보낸 모든 쿠키 중에서 내 서버가 만든 name 쿠키를 꺼냄
-    # - 없으면 None 반환 (첫방문/만료/삭제된 경우)
-    name = request.cookies.get("name");
-
-@app.get("/delete_cookie")
-def delete_cookie() :
-    # 쿠키 삭제 후 홈(/)으로 이동하기 위한 redirect 생성
-    resp = make_response(redirect(url_for("home")))
-    resp.delete_cookie("name")
-    # 읽은 쿠키 html로 출력하기
+def read_cookie():
+    # 1. 쿠키 읽기
+    name = request.cookies.get("name")
+    # 2. 결과 출력
     return f"""
         <h3>쿠키 읽기</h3>
-        <p>name 쿠키 값 : {name}</p>
+        <p>name 쿠키 값 : {name if name else '쿠키 없음'}</p>
         <a href="/">홈페이지</a>
-
     """
+
+@app.get("/delete_cookie")
+def delete_cookie():
+    resp = make_response(redirect(url_for("home")))
+    resp.delete_cookie("name") # 삭제 명령을 응답에 실어 보냄
+    return resp
 
 
 

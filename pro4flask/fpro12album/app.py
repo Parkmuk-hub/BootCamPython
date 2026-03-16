@@ -41,15 +41,15 @@ def thumb_rel_from_file_pathFunc(file_path: str) -> str:
     # file_path: "uploads/xxxx.jpg" -> thumb: "uploads/thumbs/xxxx.jpg"
     base = os.path.basename(file_path)
     return f"uploads/thumbs/{base}"  # base가 "abcd.jpg"면 → "uploads/thumbs/abcd.jpg"
-      # 왜 이렇게 하냐? DB에는 원본만 uploads/xxxx.jpg 형태로 저장해도,
-      # 썸네일 경로는 DB 컬럼 없이 규칙으로 항상 계산할 수 있게 만들기 위해서.
+# 왜 이렇게 하냐? DB에는 원본만 uploads/xxxx.jpg 형태로 저장해도,
+# 썸네일 경로는 DB 컬럼 없이 규칙으로 항상 계산할 수 있게 만들기 위해서.
 
 # 업로드한 파일명이 허용된 확장자인지를 검사하는 간단한 필터 함수
 def allowed_fileFunc(filename: str) -> bool:
-    # 파일명에 확장자가 있고, 그 확장자가 허용 목록에 있으면 True를 반환
-      # filename.rsplit(".", 1) → 오른쪽에서 . 기준으로 딱 1번만 나눔
-      # → 예: "my.photo.JPG" → ["my.photo", "JPG"]  → [1]은 확장자 부분("JPG")
-      # in ALLOWED_EXT → 미리 정해둔 허용 확장자 집합에 포함되면 True
+# 파일명에 확장자가 있고, 그 확장자가 허용 목록에 있으면 True를 반환
+# filename.rsplit(".", 1) → 오른쪽에서 . 기준으로 딱 1번만 나눔
+# → 예: "my.photo.JPG" → ["my.photo", "JPG"]  → [1]은 확장자 부분("JPG")
+# in ALLOWED_EXT → 미리 정해둔 허용 확장자 집합에 포함되면 True
     return "." in filename and filename.rsplit(".", 1)[1].lower() in ALLOWED_EXT
 
 
@@ -60,8 +60,8 @@ def save_image_and_thumbFunc(file_storage):
     # secure_filename()이 안전한 형태로 정리한 파일명을 만들어줌. 예: "../a b.png" → "a_b.png" 같은 식
     orig = secure_filename(file_storage.filename)
     ext = orig.rsplit(".", 1)[1].lower()   # 파일 확장자만 뽑아 소문자로 바꿈. 예:"cat.JPG" → "jpg"
-          # 실제 저장 파일명은 원본 이름을 쓰지 않고 UUID(고유한 문자열 ID)로 새로 만든다.
-          # 이유: 중복 방지(같은 이름 업로드해도 덮어쓰기 안 됨), 보안/관리 편함. 예: a3f1...9c.jpg
+# 실제 저장 파일명은 원본 이름을 쓰지 않고 UUID(고유한 문자열 ID)로 새로 만든다.
+# 이유: 중복 방지(같은 이름 업로드해도 덮어쓰기 안 됨), 보안/관리 편함. 예: a3f1...9c.jpg
     saved_name = f"{uuid.uuid4().hex}.{ext}"
 
     file_abs = os.path.join(UPLOAD_DIR, saved_name) # 서버 내부에서 원본 파일을 저장할 절대경로 만든다.
@@ -73,7 +73,7 @@ def save_image_and_thumbFunc(file_storage):
 
     make_thumbnailFunc(file_abs, thumb_abs)   # 원본 파일을 읽어서 썸네일 파일을 생성
     return file_rel, thumb_rel   # DB 저장/HTML 출력에 쓰기 좋은 상대 경로 2개를 반환한다.
-                               # 원본: uploads/uuid.jpg, 썸네일: uploads/thumbs/uuid.jpg
+# 원본: uploads/uuid.jpg, 썸네일: uploads/thumbs/uuid.jpg
 
 # 원본 이미지 파일(src_abs)을 열어서 썸네일(작은 이미지) 파일(thumb_abs)로 저장해주는 역할
 # 원본을 비율 유지한 채로 작은 이미지로 만들어 저장
