@@ -5,12 +5,10 @@ print("pandas 문제 1")
 #   c) 각 컬럼의 평균을 구하시오. mean() 함수와 axis 속성 사용
 import numpy as np
 from pandas import Series, DataFrame
-
-tab = np.random.randn(9, 4)
-tab1 = DataFrame(tab)
-tab1.columns=['No1', 'No2', 'No3', 'No4']
+tab1 = DataFrame(np.random.randn(9, 4), 
+                columns=['No1', 'No2', 'No3', 'No4'])
 # print(tab)
-print(np.mean(tab1, axis=0))
+print(tab1.mean(axis=0)) 
 print()
 
 print("pandas 문제 2")
@@ -36,6 +34,7 @@ print()
 
 print(numb.sum())           # d조건
 print()
+
 zem = numb ** 2             # e조건
 print(zem)
 print() 
@@ -99,7 +98,7 @@ rdata.loc['r6','D'] = rdata.loc['r6', 'A'] + rdata.loc['r6', 'B']
 print(rdata)
 print()
 
-# pandas 문제 4)
+print('pandas 문제 4')
 # 다음과 같은 재고 정보를 가지고 있는 딕셔너리 data가 있다고 하자.
 data = {
     'product': ['Mouse', 'Keyboard', 'Monitor', 'Laptop'],
