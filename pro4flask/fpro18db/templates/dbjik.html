@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h2>📊 직원 자료 및 연봉 통계</h2>
+    <b>조건 1</b>
+    {{df_t | safe}}
+    <b>조건 2</b>
+    {{df_s | safe}}
+    <b>조건 3</b>
+    <img src="{{ chart_url }}" alt="연봉 통계 그래프">
+    <b>조건 4</b>
+    {{ctab | safe}}
+    <b>조건 5</b>
+    {{dfmp_t | safe}}
+    <b>조건 6</b><br>
+    {{total_t | safe}}
+    {{dfcount_t | safe}}
+</body>
+
+</html>

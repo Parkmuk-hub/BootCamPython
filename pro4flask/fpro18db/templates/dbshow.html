@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>직원 자료 통계 시스템</title>
+    <style>
+        /* 기본 폰트 및 배경 설정 */
+        body {
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+            margin: 0;
+            padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* 메인 컨테이너 */
+        .container {
+            max-width: 800px;
+            width: 100%;
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        }
+
+        /* 제목 스타일 */
+        h2 {
+            color: #1a73e8;
+            margin-bottom: 25px;
+            font-size: 1.8rem;
+            text-align: center;
+            border-bottom: 2px solid #f0f4f8;
+            padding-bottom: 15px;
+        }
+
+        h3 {
+            color: #444;
+            margin-top: 35px;
+            border-left: 5px solid #1a73e8;
+            padding-left: 12px;
+            font-size: 1.2rem;
+        }
+
+        /* 폼 디자인 */
+        form {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: #f1f3f4;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+        }
+
+        label {
+            font-weight: 600;
+            color: #555;
+        }
+
+        input[type="text"] {
+            flex: 1;
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            outline: none;
+            transition: border 0.3s;
+        }
+
+        input[type="text"]:focus {
+            border-color: #1a73e8;
+            box-shadow: 0 0 0 3px rgba(26, 115, 232, 0.1);
+        }
+
+        /* 버튼 스타일 */
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        button[type="submit"] {
+            background-color: #1a73e8;
+            color: white;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #1557b0;
+            transform: translateY(-1px);
+        }
+
+        /* 메인 페이지 이동 버튼 */
+        .btn-home {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            padding: 0;
+            /* a 태그가 꽉 차도록 */
+        }
+
+        .btn-home a {
+            text-decoration: none;
+            color: #666;
+            display: block;
+            padding: 10px 20px;
+        }
+
+        .btn-home:hover {
+            background-color: #f8f9fa;
+        }
+
+        hr {
+            border: 0;
+            height: 1px;
+            background: #eee;
+            margin: 30px 0;
+        }
+
+        /* 모바일 대응 */
+        @media (max-width: 600px) {
+            form {
+                flex-direction: column;
+                align-items: stretch;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2>📊 직원 자료 및 연봉 통계</h2>
+
+        <form method="get" action="/dbshow">
+            <label for="dept">부서 검색</label>
+            <input type="text" id="dept" name="dept" placeholder="예) 총무부, 영업부">
+            <button type="submit">조회하기</button>
+            <button type="button" class="btn-home"><a href="/">메인으로</a></button>
+        </form>
+
+        <h3>📋 직원 목록</h3>
+        {{jikwondata | safe}}
+
+        <h3>📈 직급별 연봉 통계</h3>
+        <p style="color: #888; font-size: 0.9rem;">(평균 / 표준편차 / 인원수)</p>
+        {{statsdata | safe}}
+    </div>
+</body>
+
+</html>
