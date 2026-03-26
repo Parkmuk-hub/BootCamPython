@@ -2,11 +2,11 @@ from flask import Flask, render_template
 import pandas as pd
 import numpy as np
 import seaborn as sns
-import matplotlib 
+import matplotlib
 matplotlib.use('Agg')
 # Agg(Anti Grain Geometry) : matplotlib의 렌더링 엔진 중 하나
 # 이미지 저장시 오류 방지 - 차트 출력 없이 저장할 때 사용
-import matplotlib as plt
+import matplotlib.pyplot as plt
 from pathlib import Path
 
 app = Flask(__name__)
@@ -33,7 +33,11 @@ def showdata() :
     img_path = STATIC_DIR / 'fpro19.png'
     plt.savefig(img_path, dpi=130)
     plt.close()
-    return render_template("show.html")
+
+    irishtml = df.to_html(
+        classes='table table-striped table-sm', index=False
+    )
+    return render_template("show.html", table=irishtml, img_path="images/fpro19.png")
 
 if __name__ == '__main__' :
     app.run(debug=True)
