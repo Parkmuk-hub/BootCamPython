@@ -10,8 +10,8 @@ import seaborn as sns
 # 두 집단 : 강수량이 있을 때, 맑을 때 
 
 """
-    귀무 : 어느 음식점의 매출 데이터는 강수 여부에 따라 매출액 평균에 차이가 없다.
-    대립 : 어느 음식점의 매출 데이터는 강수 여부에 따라 매출액 평균에 차이가 있다.
+        귀무 : 어느 음식점의 매출 데이터는 강수 여부에 따라 매출액 평균에 차이가 없다.
+        대립 : 어느 음식점의 매출 데이터는 강수 여부에 따라 매출액 평균에 차이가 있다.
 """
 pd.set_option('display.max_columns', None)
 
@@ -82,3 +82,17 @@ print('tg2(비온날) 매출액 평균', tg2.mean())    # 757331.5217391305
 
 plt.boxplot([tg1, tg2], meanline=True, showmeans=True, notch=True)
 plt.show()
+
+# 정규성 검정
+print(len(tg1), ' ', len(tg2))  # 236, 92
+print(stats.shapiro(tg1).pvalue)        # 0.0560506 > 0.05 만족
+print(stats.shapiro(tg2).pvalue)        # 0.8827503 > 0.05
+
+# 등분산 검정
+print(stats.levene(tg1, tg2).pvalue)    # 0.7123452 > 0.05
+
+print(stats.ttest_ind(tg1, tg2, equal_var=True))
+# TtestResult : statistic=0.101098, pvalue=0.91953, df=326.0
+# 해석 : 정규성, 등분산성 조건은 충족함
+# pvalue 0.91953 > alpha 0.05  이므로 귀무가설 채택
+# 매출 데이터는 강수 여부에 따라 매출액 평균에 차이가 없다고 보여진다.
