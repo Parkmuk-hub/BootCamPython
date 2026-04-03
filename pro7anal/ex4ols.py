@@ -31,7 +31,7 @@ plt.plot(x, weight * x + bias, 'r', label='최적화된 선형직선')
 plt.grid(True)
 plt.show()
 
-# 경험하지 않은 x 값에 대한 y
+# 경험하지 않은 x 값에 대한 y 값은?
 x = 1.2345
 yhat = weight * x + bias
 print('예측결과 : ', yhat)  # 0.19512
