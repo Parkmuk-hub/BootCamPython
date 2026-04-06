@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <title>연봉 예측</title>
+</head>
+
+<body>
+    <h2>근무년수 ➔ 예상 연봉(LinearRegression)</h2>
+
+    근무년수 : <input type="text" id="years" value="3">
+    <button type="button" id="btn">확인</button>
+
+    <div style="margin-top:15px; background:#f3f3f3; width:450px; padding:15px; border-radius:5px;">
+        <div><b>예상연봉액 : <span id="predArea">{{ pred }}</span></b></div>
+        <div>설명력(R²) : <b><span id="r2Area">{{ r2 }}</span>%</b></div>
+        <div>회귀식 : <b>pay = <span id="coefArea">{{ coef }}</span> * years + <span id="interceptArea">{{ intercept
+                    }}</span></b></div>
+    </div>
+
+    <h3>직급별 연봉평균</h3>
+    <table border="1" style="width:450px; border-collapse: collapse; text-align: center;">
+        <tr style="background:#eee;">
+            <th>직급</th>
+            <th>평균 연봉</th>
+        </tr>
+        {% for row in jik_avg %}
+        <tr>
+            <td>{{ row['jikwonjik'] }}</td>
+            <td>{{ "{:,.0f}".format(row['avg_pay']) }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <script>
+        // DOM이 로드된 후 실행
+        document.addEventListener('DOMContentLoaded', function () {
+
+            // 버튼 클릭 이벤트 리스너 등록
+            document.getElementById('btn').addEventListener('click', function () {
+                const yearsVal = document.getElementById('years').value;
+
+                // 폼 데이터를 담기 위한 객체 생성
+                const formData = new URLSearchParams();
+                formData.append('years', yearsVal);
+
+                // Fetch API를 사용한 Ajax 요청
+                fetch('/predict', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: formData
+                })
+                    .then(response => {
+                        if (!response.ok) throw new Error('네트워크 응답 오류');
+                        return response.json(); // 응답 데이터를 JSON으로 파싱
+                    })
+                    .then(data => {
+                        // 서버 응답 데이터를 화면에 반영
+                        document.getElementById('predArea').innerText = data.pred;
+                        document.getElementById('r2Area').innerText = data.r2;
+                        document.getElementById('coefArea').innerText = data.coef;
+                        document.getElementById('interceptArea').innerText = data.intercept;
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        alert('오류 발생: ' + error.message);
+                    });
+            });
+        });
+    </script>
+</body>
+
+</html>
