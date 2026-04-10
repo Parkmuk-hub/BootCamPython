@@ -49,3 +49,62 @@ print('맞춘 갯수 : ', sum(test_y == pred))
 print('전체 대비 맞춘 비율 : ', sum(test_y == pred) / len(test_y))
 print("분류 정확도 : ", accuracy_score(test_y, pred))
 
+# 교차 검증 (KFold)
+cross_vali = cross_val_score(model, df_x, df_y, cv=5)
+print(cross_vali)
+print('교차 검증 평균 정확도 : ', np.round(np.mean(cross_vali), 5))
+
+print('중요 변수 확인하기 -----')
+print('특성(변수) 중요도 : ', model.feature_importances_)
+# .feature_importances_ : 각 특성이 예측에 기여한 정도(중요도)를 수치로 표현
+# 값의 합은 1.0, 수치가 클수록 해당 변수가 불순도 감소에 더 많이 기여함.
+
+# 시각화
+import matplotlib.pyplot as plt
+n_features = df_x.shape[1]
+plt.barh(range(n_features), model.feature_importances_, align='center')
+plt.xlabel('Feature importance Score')
+plt.ylabel('Features')
+plt.yticks(np.arange(n_features), df_x.columns)
+plt.ylim(-1, n_features)
+plt.show()
+plt.close()
+
+print()
+# 전체 변수 대상으로 중요도 확인
+# Name, Ticket, Cabin : 문자형 - 바로 사용 불가 (Encoding 필요)
+# PassengerId, Nmae : Survived와 상관없는 변수
+
+# 1. 6개 칼럼 데이터 준비
+df_imsi = df[['Pclass', 'Age', 'Sex', 'Fare', 'SibSp', 'Parch']].copy()
+df_imsi.loc[:, 'Sex'] = encoder.fit_transform(df_imsi['Sex'])
+
+# 2. 데이터 분할
+train_x, test_x, train_y, test_y = train_test_split(
+    df_imsi, df_y, test_size=0.3, random_state=12
+)
+
+# 3. 모델 다시 학습 (중요!! 6개 칼럼으로 학습해야 함)
+model.fit(train_x, train_y) 
+
+# 4. 이제 중요도를 뽑으면 6개 점수가 나옵니다.
+importances = model.feature_importances_
+
+# 5. 데이터프레임 생성 (이제 개수가 6개로 똑같아서 에러가 안 납니다)
+feature_df = pd.DataFrame({
+    'feature': df_imsi.columns,
+    'importance': importances
+}).sort_values(by='importance', ascending=False)
+
+print(feature_df)
+
+# 시각화
+import seaborn as sns
+plt.figure(figsize=(8, 5))
+sns.barplot(x='importance', y='feature', data=feature_df, orient='h')
+plt.xlabel('Feature importance Score')
+plt.ylabel('Features')
+plt.tight_layout()
+plt.show()
+plt.close()
+
